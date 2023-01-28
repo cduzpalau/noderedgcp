@@ -1,0 +1,406 @@
+[
+    {
+        "id": "2211074541a59cdf",
+        "type": "tab",
+        "label": "Hello World",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "70f2bb7fea6180a8",
+        "type": "tab",
+        "label": "App Engine",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "b3eb4265a1be88d8",
+        "type": "tab",
+        "label": "Hello World 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "722494bf85bb4476",
+        "type": "inject",
+        "z": "2211074541a59cdf",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 280,
+        "wires": [
+            [
+                "f5bbbb577758bbf4"
+            ]
+        ]
+    },
+    {
+        "id": "47db582debd44917",
+        "type": "debug",
+        "z": "2211074541a59cdf",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "f5bbbb577758bbf4",
+        "type": "function",
+        "z": "2211074541a59cdf",
+        "name": "formatDateTime",
+        "func": "// Create a Date object from the payload\nvar date = new Date(msg.payload);\n// Change the payload to be a formatted Date string\nmsg.payload = date.toString();\n// Return the message so it can be sent on\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 280,
+        "wires": [
+            [
+                "47db582debd44917"
+            ]
+        ]
+    },
+    {
+        "id": "44e7049c8dbc51ad",
+        "type": "inject",
+        "z": "2211074541a59cdf",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 380,
+        "wires": [
+            [
+                "3d281b0a27878db7"
+            ]
+        ]
+    },
+    {
+        "id": "3d281b0a27878db7",
+        "type": "http request",
+        "z": "2211074541a59cdf",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.csv",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 390,
+        "y": 380,
+        "wires": [
+            [
+                "654f821f6557e2f0"
+            ]
+        ]
+    },
+    {
+        "id": "654f821f6557e2f0",
+        "type": "csv",
+        "z": "2211074541a59cdf",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 610,
+        "y": 380,
+        "wires": [
+            [
+                "bc5fa55a111f8e31",
+                "d3e8e0ea7cc7115e"
+            ]
+        ]
+    },
+    {
+        "id": "bc5fa55a111f8e31",
+        "type": "debug",
+        "z": "2211074541a59cdf",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "d3e8e0ea7cc7115e",
+        "type": "switch",
+        "z": "2211074541a59cdf",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "gte",
+                "v": "7",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 710,
+        "y": 500,
+        "wires": [
+            [
+                "ff4608fb059512c5"
+            ]
+        ]
+    },
+    {
+        "id": "ff4608fb059512c5",
+        "type": "change",
+        "z": "2211074541a59cdf",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "PANIC!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 500,
+        "wires": [
+            [
+                "4878bded7e8a391f"
+            ]
+        ]
+    },
+    {
+        "id": "4878bded7e8a391f",
+        "type": "debug",
+        "z": "2211074541a59cdf",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "b45064c480157bef",
+        "type": "http in",
+        "z": "70f2bb7fea6180a8",
+        "name": "HTTP GET /_ah/start",
+        "url": "/_ah/start",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "c932c0dff546c990"
+            ]
+        ]
+    },
+    {
+        "id": "5bccb43b82fda7c0",
+        "type": "http in",
+        "z": "70f2bb7fea6180a8",
+        "name": "HTTP GET /_ah/stop",
+        "url": "/_ah/stop",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 190,
+        "y": 220,
+        "wires": [
+            [
+                "c932c0dff546c990"
+            ]
+        ]
+    },
+    {
+        "id": "e99ab3396c82fca3",
+        "type": "http in",
+        "z": "70f2bb7fea6180a8",
+        "name": "HTTP GET /_ah/warmup",
+        "url": "/_ah/warmup",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 210,
+        "y": 280,
+        "wires": [
+            [
+                "c932c0dff546c990"
+            ]
+        ]
+    },
+    {
+        "id": "c932c0dff546c990",
+        "type": "http response",
+        "z": "70f2bb7fea6180a8",
+        "name": "HTTP Response",
+        "statusCode": "200",
+        "headers": {},
+        "x": 520,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "17a167bf45b641ef",
+        "type": "comment",
+        "z": "70f2bb7fea6180a8",
+        "name": "App Engine Instance Management",
+        "info": "These endpoints aren't required but App Engine uses them for instance management so it's nice to have a 200 HTTP response for them.\n\nhttps://cloud.google.com/appengine/docs/standard/nodejs/how-instances-are-managed",
+        "x": 520,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "1a36f15f2ba66532",
+        "type": "http in",
+        "z": "b3eb4265a1be88d8",
+        "name": "HTTP GET /hello",
+        "url": "/hello",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "4e47fedcbec22b2e"
+            ]
+        ]
+    },
+    {
+        "id": "4fe8954667297f06",
+        "type": "template",
+        "z": "b3eb4265a1be88d8",
+        "name": "Hello Template",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <title>Hello from node-red</title>\n  </head>\n  <body>\n    {{^payload.name}}\n      <h1>Hello world!</h1>\n    {{/payload.name}}\n    {{#payload.name}}\n      <h1>Hello {{payload.name}}!</h1>\n    {{/payload.name}}\n    <p>Your lucky number is {{random}}</p>\n  </body>\n</html>",
+        "output": "str",
+        "x": 440,
+        "y": 160,
+        "wires": [
+            [
+                "0d52813489e99bd4"
+            ]
+        ]
+    },
+    {
+        "id": "4b3c76a2671593db",
+        "type": "debug",
+        "z": "b3eb4265a1be88d8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "0d52813489e99bd4",
+        "type": "http response",
+        "z": "b3eb4265a1be88d8",
+        "name": "HTTP Response",
+        "statusCode": "200",
+        "headers": {},
+        "x": 640,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "4e47fedcbec22b2e",
+        "type": "random",
+        "z": "b3eb4265a1be88d8",
+        "name": "Lucky Number",
+        "low": "10",
+        "high": "99",
+        "inte": "true",
+        "property": "random",
+        "x": 300,
+        "y": 240,
+        "wires": [
+            [
+                "4fe8954667297f06",
+                "4b3c76a2671593db"
+            ]
+        ]
+    }
+]

@@ -1,0 +1,24 @@
+{
+  "name": "noderedgcp",
+  "version": "0.0.1",
+  "description": "Node Red running on GCP App Engine with configuration living in Github and Auto-deployed on change",
+  "main": "index.js",
+  "scripts": {
+    "editor": "node-red --settings=./settings.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cduzpalau/noderedgcp.git"
+  },
+  "author": "Carles Duz Palau (cduzpalau)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cduzpalau/noderedgcp/issues"
+  },
+  "homepage": "https://github.com/cduzpalau/noderedgcp#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "node-red": "^3.0.2",
+    "node-red-node-random": "^0.4.1"
+  }
+}

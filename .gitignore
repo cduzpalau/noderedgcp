@@ -1,2 +1,12 @@
 # Google App Engine generated folder
 appengine-generated/
+
+# Dependencies
+node_modules/
+
+# Editor temp files
+.config.*.json
+*.json.backup
+
+# Credential key
+.env
