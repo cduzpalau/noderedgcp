@@ -172,7 +172,7 @@ module.exports = {
    * If set to false, this is disabled.
    */
   //httpAdminRoot: '/admin',
-
+  httpAdminRoot: false,
   /** The following property can be used to add a custom middleware function
    * in front of all admin http routes. For example, to set custom http
    * headers. It can be a single function or an array of middleware functions.
@@ -482,6 +482,7 @@ module.exports = {
    *  middleware:{function or array}, (req,res,next) - http middleware
    *  ioMiddleware:{function or array}, (socket,next) - socket.io middleware
    */
+  readOnly: true,
   //ui: { path: "ui" },
 
   /** Colourise the console output of the debug node */

@@ -4,7 +4,8 @@
   "description": "Node Red running on GCP App Engine with configuration living in Github and Auto-deployed on change",
   "main": "index.js",
   "scripts": {
-    "editor": "node-red --settings=./settings.js"
+    "editor": "node-red --settings=./settings.js -D httpAdminRoot=/ -D readOnly=false",
+    "start": "node-red --settings=./settings.js"
   },
   "repository": {
     "type": "git",
